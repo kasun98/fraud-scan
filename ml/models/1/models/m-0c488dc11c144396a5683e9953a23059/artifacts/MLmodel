@@ -1,0 +1,41 @@
+artifact_path: file:C:/data/fraud-detection/ml/models/1/models/m-0c488dc11c144396a5683e9953a23059/artifacts
+flavors:
+  python_function:
+    data: model.ubj
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.xgboost
+    python_version: 3.13.13
+  xgboost:
+    code: null
+    data: model.ubj
+    model_class: xgboost.sklearn.XGBClassifier
+    model_format: ubj
+    xgb_version: 3.2.0
+is_signature_from_type_hint: false
+mlflow_version: 3.11.1
+model_id: m-0c488dc11c144396a5683e9953a23059
+model_size_bytes: 57315
+model_uuid: m-0c488dc11c144396a5683e9953a23059
+prompts: null
+run_id: 2b0fe6b9f0dd44e3810d6e3cc6ce172b
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "double", "name": "amount", "required": true}, {"type": "long",
+    "name": "txn_count_user", "required": true}, {"type": "double", "name": "hours_since_last_txn",
+    "required": true}, {"type": "double", "name": "amount_deviation", "required":
+    true}, {"type": "double", "name": "geo_distance_km", "required": true}, {"type":
+    "long", "name": "is_new_device", "required": true}, {"type": "long", "name": "is_high_risk_country",
+    "required": true}, {"type": "long", "name": "is_cross_border", "required": true},
+    {"type": "long", "name": "merchant_category", "required": true}, {"type": "long",
+    "name": "payment_method", "required": true}, {"type": "long", "name": "channel",
+    "required": true}]'
+  outputs: '[{"type": "long", "required": true}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-04-23 04:40:37.989747'

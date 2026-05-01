@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feature-engineering
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feature-engineering
+  template:
+    metadata:
+      labels:
+        app: feature-engineering
+    spec:
+      containers:
+        - name: feature-engineering
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "{{ .Values.kafka.bootstrapServers }}"
+            - name: KAFKA_TOPIC_RAW
+              value: "{{ .Values.kafka.topicRaw }}"
+            - name: KAFKA_TOPIC_FEATURES
+              value: "{{ .Values.kafka.topicFeatures }}"
+            - name: REDIS_HOST
+              value: "{{ .Values.redis.host }}"
+            - name: REDIS_PORT
+              value: "{{ .Values.redis.port }}"
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}

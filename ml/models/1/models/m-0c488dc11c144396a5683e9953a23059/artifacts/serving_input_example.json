@@ -1,0 +1,32 @@
+{
+  "dataframe_split": {
+    "columns": [
+      "amount",
+      "txn_count_user",
+      "hours_since_last_txn",
+      "amount_deviation",
+      "geo_distance_km",
+      "is_new_device",
+      "is_high_risk_country",
+      "is_cross_border",
+      "merchant_category",
+      "payment_method",
+      "channel"
+    ],
+    "data": [
+      [
+        46.23,
+        121,
+        1.3167,
+        0.8812,
+        38.94,
+        0,
+        0,
+        1,
+        4,
+        3,
+        3
+      ]
+    ]
+  }
+}

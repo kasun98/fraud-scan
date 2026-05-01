@@ -1,0 +1,6 @@
+apiVersion: v2
+name: feature-engineering
+description: Consumes transactions from Kafka and computes ML features into Redis
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

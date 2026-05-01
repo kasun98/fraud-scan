@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: case-management-ui
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: case-management-ui
+  template:
+    metadata:
+      labels:
+        app: case-management-ui
+    spec:
+      containers:
+        - name: case-management-ui
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: case-management-ui
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    app: case-management-ui
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP

@@ -1,0 +1,26 @@
+image:
+  repository: ml-scoring
+  tag: latest
+  pullPolicy: Never
+
+kafka:
+  bootstrapServers: "fraud-kafka-kafka-bootstrap.kafka.svc.cluster.local:9092"
+  topicFeatures: "transactions-scored"
+  topicDecisions: "fraud-decisions"
+
+mlflow:
+  trackingUri: "http://host.minikube.internal:5001"
+
+scoring:
+  fraudThreshold: "0.55"
+
+service:
+  port: 8001
+
+resources:
+  requests:
+    cpu: "200m"
+    memory: "512Mi"
+  limits:
+    cpu: "1000m"
+    memory: "1Gi"

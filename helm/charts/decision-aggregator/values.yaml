@@ -1,0 +1,18 @@
+image:
+  repository: decision-aggregator
+  tag: latest
+  pullPolicy: Never
+
+kafka:
+  bootstrapServers: "fraud-kafka-kafka-bootstrap.kafka.svc.cluster.local:9092"
+  topicDecisions: "fraud-decisions"
+  topicAlerts: "fraud-alerts"
+
+database:
+  url: "postgresql://postgres:localdev@postgres-postgresql.fraud-detection:5432/fraud_db"
+
+alerting:
+  sendgridApiKey: ""
+  emailTo: ""
+  emailFrom: "alerts@fraud-detection.local"
+  webhookUrl: ""

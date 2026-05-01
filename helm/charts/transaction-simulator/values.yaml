@@ -1,0 +1,21 @@
+image:
+  repository: transaction-simulator
+  tag: latest
+  pullPolicy: Never
+
+kafka:
+  bootstrapServers: "fraud-kafka-kafka-bootstrap.kafka.svc.cluster.local:9092"
+  topicRaw: "transactions-raw"
+
+simulator:
+  transactionsPerSecond: "10"
+  fraudRate: "0.005"
+  logLevel: "INFO"
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+  limits:
+    cpu: "300m"
+    memory: "256Mi"

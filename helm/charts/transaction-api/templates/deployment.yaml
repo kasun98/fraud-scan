@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-api
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: transaction-api
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transaction-api
+  template:
+    metadata:
+      labels:
+        app: transaction-api
+    spec:
+      containers:
+        - name: api
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "{{ .Values.kafka.bootstrapServers }}"
+            - name: KAFKA_TOPIC_RAW
+              value: "{{ .Values.kafka.topicRaw }}"
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: 15
+            periodSeconds: 60
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transaction-api
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    app: transaction-api
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+  type: ClusterIP

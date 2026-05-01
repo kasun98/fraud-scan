@@ -1,0 +1,6 @@
+apiVersion: v2
+name: case-management-api
+description: FastAPI for fraud case review and analyst feedback
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

@@ -1,0 +1,7 @@
+grafana:
+  adminPassword: "fraudguard123"
+  persistence:
+    enabled: false
+
+alertmanager:
+  enabled: false

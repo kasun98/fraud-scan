@@ -1,0 +1,10 @@
+image:
+  repository: case-management-api
+  tag: latest
+  pullPolicy: Never
+
+database:
+  url: "postgresql://postgres:localdev@postgres-postgresql.fraud-detection:5432/fraud_db"
+
+service:
+  port: 8002

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: decision-aggregator
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: decision-aggregator
+  template:
+    metadata:
+      labels:
+        app: decision-aggregator
+    spec:
+      containers:
+        - name: decision-aggregator
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "{{ .Values.kafka.bootstrapServers }}"
+            - name: KAFKA_TOPIC_DECISIONS
+              value: "{{ .Values.kafka.topicDecisions }}"
+            - name: KAFKA_TOPIC_ALERTS
+              value: "{{ .Values.kafka.topicAlerts }}"
+            - name: DATABASE_URL
+              value: "{{ .Values.database.url }}"
+            - name: SENDGRID_API_KEY
+              value: "{{ .Values.alerting.sendgridApiKey }}"
+            - name: ALERT_EMAIL_TO
+              value: "{{ .Values.alerting.emailTo }}"
+            - name: ALERT_WEBHOOK_URL
+              value: "{{ .Values.alerting.webhookUrl }}"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "300m"
+              memory: "256Mi"

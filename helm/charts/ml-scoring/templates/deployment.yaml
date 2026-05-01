@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-scoring
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ml-scoring
+  template:
+    metadata:
+      labels:
+        app: ml-scoring
+    spec:
+      containers:
+        - name: ml-scoring
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "{{ .Values.kafka.bootstrapServers }}"
+            - name: KAFKA_TOPIC_FEATURES
+              value: "{{ .Values.kafka.topicFeatures }}"
+            - name: KAFKA_TOPIC_DECISIONS
+              value: "{{ .Values.kafka.topicDecisions }}"
+            - name: MLFLOW_TRACKING_URI
+              value: "{{ .Values.mlflow.trackingUri }}"
+            - name: FRAUD_THRESHOLD
+              value: "{{ .Values.scoring.fraudThreshold }}"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ml-scoring
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    app: ml-scoring
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+  type: ClusterIP

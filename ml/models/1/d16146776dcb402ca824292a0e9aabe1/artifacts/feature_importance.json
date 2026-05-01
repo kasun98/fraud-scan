@@ -1,0 +1,13 @@
+{
+  "amount": "0.24566628",
+  "is_high_risk_country": "0.21720606",
+  "amount_deviation": "0.18186097",
+  "merchant_category": "0.16216066",
+  "is_new_device": "0.1260473",
+  "geo_distance_km": "0.05537205",
+  "payment_method": "0.005080373",
+  "hours_since_last_txn": "0.004628381",
+  "txn_count_user": "0.00130168",
+  "channel": "0.00041366502",
+  "is_cross_border": "0.00026259897"
+}

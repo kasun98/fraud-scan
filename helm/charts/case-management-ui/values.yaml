@@ -1,0 +1,7 @@
+image:
+  repository: case-management-ui
+  tag: latest
+  pullPolicy: Never
+
+service:
+  port: 80
